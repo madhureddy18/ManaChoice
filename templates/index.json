@@ -1,32 +1,13 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "sections": {
-    "marketplace": {
-      "type": "mc-marketplace-home",
-      "settings": {
-        "heading": "Discover things you'll wish you found sooner.",
-        "subheading": "Trending finds, everyday essentials and products worth discovering — all in one place.",
-        "primary_label": "Shop all",
-        "primary_link": "shopify://collections/all",
-        "secondary_label": "Explore deals",
-        "secondary_link": "shopify://collections/all",
-        "categories_heading": "Shop by category",
-        "featured_heading": "Popular picks",
-        "featured_collection": "all",
-        "products_to_show": 8,
-        "deal_heading": "Good products. Better prices.",
-        "deal_text": "Find limited-time offers and everyday value across the store.",
-        "deal_link": "shopify://collections/all"
-      },
-      "blocks": {
-        "cat1": {"type":"category","settings":{"icon":"⚡","title":"Electronics","subtitle":"Smart tech & accessories","link":"shopify://collections/all"}},
-        "cat2": {"type":"category","settings":{"icon":"👕","title":"Fashion","subtitle":"Everyday styles & picks","link":"shopify://collections/all"}},
-        "cat3": {"type":"category","settings":{"icon":"🏠","title":"Home & Living","subtitle":"Useful things for home","link":"shopify://collections/all"}},
-        "cat4": {"type":"category","settings":{"icon":"✈️","title":"Travel","subtitle":"Travel smarter","link":"shopify://collections/all"}},
-        "cat5": {"type":"category","settings":{"icon":"🎮","title":"Gadgets","subtitle":"Fun & useful tech","link":"shopify://collections/all"}},
-        "cat6": {"type":"category","settings":{"icon":"🐾","title":"Pets","subtitle":"For your furry friends","link":"shopify://collections/all"}}
-      },
-      "block_order": ["cat1","cat2","cat3","cat4","cat5","cat6"]
-    }
-  },
-  "order": ["marketplace"]
+  "sections": {},
+  "order": []
 }
