@@ -1,0 +1,21 @@
+<header class="mc-header">
+  <div class="mc-header__trust"><div class="page-width"><span>🚚 Free shipping on eligible orders</span><span>🔒 Secure payments</span><span>↩ Easy returns</span></div></div>
+  <div class="page-width mc-header__main">
+    <a class="mc-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home"><span>Mana</span><b>Choice</b></a>
+    <form class="mc-header__search" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products, brands and more..." aria-label="Search products">
+      <input type="hidden" name="type" value="product">
+      <button type="submit" aria-label="Search">⌕</button>
+    </form>
+    <nav class="mc-header__actions" aria-label="Account actions">
+      <a href="{{ routes.account_url }}"><span>👤</span><em>Account</em></a>
+      <a href="/pages/wishlist"><span>♡</span><em>Wishlist</em></a>
+      <a href="{{ routes.cart_url }}"><span>🛒</span><em>Cart</em>{% if cart.item_count > 0 %}<strong>{{ cart.item_count }}</strong>{% endif %}</a>
+    </nav>
+  </div>
+  <div class="page-width mc-header__mobile-search">
+    <form action="{{ routes.search_url }}" method="get" role="search"><input type="search" name="q" placeholder="Search products, brands and more..." aria-label="Search products"><input type="hidden" name="type" value="product"><button type="submit">⌕</button></form>
+  </div>
+  <nav class="mc-header__nav" aria-label="Main navigation"><div class="page-width"><a href="{{ routes.all_products_collection_url }}">All</a><a href="{{ routes.all_products_collection_url }}?filter.p.m.category=Electronics">Electronics</a><a href="{{ routes.all_products_collection_url }}?filter.p.m.category=Fashion">Fashion</a><a href="{{ routes.all_products_collection_url }}?filter.p.m.category=Home">Home</a><a href="{{ routes.all_products_collection_url }}?filter.p.m.category=Travel">Travel</a><a href="{{ routes.all_products_collection_url }}?filter.p.m.category=Gadgets">Gadgets</a><a href="{{ routes.all_products_collection_url }}?filter.p.m.category=Pets">Pets</a><a class="mc-header__deals" href="{{ routes.all_products_collection_url }}?sort_by=price-ascending">🔥 Deals</a></div></nav>
+</header>
+{% schema %}{"name":"ManaChoice header","settings":[]}{% endschema %}
