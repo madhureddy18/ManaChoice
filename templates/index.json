@@ -3,29 +3,15 @@
     "marketplace": {
       "type": "mc-marketplace-home",
       "settings": {
-        "heading": "Discover things you'll wish you found sooner.",
-        "subheading": "Trending finds, everyday essentials and products worth discovering — all in one place.",
-        "primary_label": "Shop all",
+        "heading": "Discover more. Shop smarter.",
+        "subheading": "Trending products, useful finds, everyday essentials and deals — all in one marketplace.",
+        "primary_label": "Shop now",
         "primary_link": "shopify://collections/all-products",
         "secondary_label": "Explore deals",
         "secondary_link": "shopify://collections/deals",
-        "categories_heading": "Shop by category",
-        "featured_heading": "Popular picks",
         "featured_collection": "all-products",
-        "products_to_show": 8,
-        "deal_heading": "Good products. Better prices.",
-        "deal_text": "Find limited-time offers and everyday value across the store.",
-        "deal_link": "shopify://collections/deals"
-      },
-      "blocks": {
-        "cat1": {"type":"category","settings":{"icon":"⚡","title":"Electronics","subtitle":"Smart tech & accessories","link":"shopify://collections/electronics"}},
-        "cat2": {"type":"category","settings":{"icon":"👕","title":"Fashion","subtitle":"Everyday styles & picks","link":"shopify://collections/fashion"}},
-        "cat3": {"type":"category","settings":{"icon":"🏠","title":"Home & Living","subtitle":"Useful things for home","link":"shopify://collections/home"}},
-        "cat4": {"type":"category","settings":{"icon":"✈️","title":"Travel","subtitle":"Travel smarter","link":"shopify://collections/travel"}},
-        "cat5": {"type":"category","settings":{"icon":"🎮","title":"Gadgets","subtitle":"Fun & useful tech","link":"shopify://collections/gadgets"}},
-        "cat6": {"type":"category","settings":{"icon":"🐾","title":"Pets","subtitle":"For your furry friends","link":"shopify://collections/pets"}}
-      },
-      "block_order": ["cat1","cat2","cat3","cat4","cat5","cat6"]
+        "deals_collection": "deals"
+      }
     }
   },
   "order": ["marketplace"]
