@@ -1,3 +1,5 @@
+{{ 'mc-home.css' | asset_url | stylesheet_tag }}
+
 <section class="mc-home page-width">
   <div class="mc-home__hero">
     <div class="mc-home__hero-copy">
@@ -49,9 +51,7 @@
               {% if product.vendor != blank %}<span class="mc-product-card__vendor">{{ product.vendor }}</span>{% endif %}
               <a href="{{ product.url }}" class="mc-product-card__title">{{ product.title }}</a>
               <div class="mc-product-card__price">{{ product.price | money }}</div>
-              {% if product.compare_at_price > product.price %}
-                <span class="mc-product-card__sale">Sale</span>
-              {% endif %}
+              {% if product.compare_at_price > product.price %}<span class="mc-product-card__sale">Sale</span>{% endif %}
               <a class="mc-product-card__cart" href="{{ product.url }}">View product</a>
             </div>
           </div>
