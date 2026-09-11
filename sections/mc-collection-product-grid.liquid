@@ -1,0 +1,52 @@
+<section class="mc-collection page-width">
+  <div class="mc-collection__head">
+    <div>
+      <span class="mc-eyebrow">MANA CHOICE</span>
+      <h1>{{ collection.title }}</h1>
+      {% if collection.description != blank %}<div class="mc-collection__description">{{ collection.description }}</div>{% endif %}
+    </div>
+    <span class="mc-collection__count">{{ collection.products_count }} products</span>
+  </div>
+
+  {% paginate collection.products by 24 %}
+    {% if collection.products_count > 0 %}
+      <div class="mc-collection__grid">
+        {% for product in collection.products %}
+          <article class="mc-product-card">
+            <a href="{{ product.url }}" class="mc-product-card__image">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '280,420,560,700', alt: product.featured_image.alt | default: product.title | escape }}
+              {% else %}
+                <div class="mc-product-card__placeholder">No image</div>
+              {% endif %}
+              {% if product.compare_at_price > product.price %}<span class="mc-product-card__badge">SALE</span>{% endif %}
+            </a>
+            <div class="mc-product-card__body">
+              {% if product.vendor != blank %}<span class="mc-product-card__vendor">{{ product.vendor }}</span>{% endif %}
+              <a href="{{ product.url }}" class="mc-product-card__title">{{ product.title }}</a>
+              <div class="mc-product-card__price">{{ product.price | money }}</div>
+              {% if product.compare_at_price > product.price %}<span class="mc-product-card__compare">{{ product.compare_at_price | money }}</span>{% endif %}
+              <a class="mc-product-card__cart" href="{{ product.url }}">View product</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <nav class="mc-pagination" aria-label="Pagination">
+          {% if paginate.previous %}<a href="{{ paginate.previous.url }}">← Previous</a>{% endif %}
+          <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {% if paginate.next %}<a href="{{ paginate.next.url }}">Next →</a>{% endif %}
+        </nav>
+      {% endif %}
+    {% else %}
+      <div class="mc-empty"><h2>No products here yet</h2><p>We're adding more products soon.</p><a class="mc-btn mc-btn--primary" href="/collections/all-products">Shop all products</a></div>
+    {% endif %}
+  {% endpaginate %}
+</section>
+
+<style>
+.mc-collection{padding-top:34px;padding-bottom:60px}.mc-collection__head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:24px}.mc-collection h1{margin:4px 0 8px;font-size:32px;line-height:1.1}.mc-collection__description{color:#666;max-width:720px;font-size:14px}.mc-collection__count{color:#777;font-size:13px;white-space:nowrap}.mc-collection__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.mc-collection .mc-product-card{border:1px solid #e8e8ef;border-radius:12px;overflow:hidden;background:#fff;min-width:0}.mc-collection .mc-product-card__image{position:relative;display:block;aspect-ratio:1/1;background:#f6f6f8;overflow:hidden}.mc-collection .mc-product-card__image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s ease}.mc-collection .mc-product-card:hover img{transform:scale(1.025)}.mc-product-card__badge{position:absolute;left:10px;top:10px;background:#111;color:#fff;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:800}.mc-collection .mc-product-card__body{padding:13px}.mc-product-card__vendor{display:block;color:#777;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}.mc-product-card__title{display:block;color:#171717;text-decoration:none;font-weight:650;font-size:14px;line-height:1.35;min-height:38px}.mc-product-card__price{display:inline-block;margin-top:9px;font-weight:850;font-size:16px}.mc-product-card__compare{margin-left:7px;color:#999;text-decoration:line-through;font-size:12px}.mc-product-card__cart{display:block;margin-top:12px;text-align:center;text-decoration:none;background:#6c4cff;color:#fff;border-radius:7px;padding:9px 10px;font-size:12px;font-weight:800}.mc-product-card__placeholder{display:grid;place-items:center;height:100%;color:#888;font-size:12px}.mc-pagination{display:flex;justify-content:center;align-items:center;gap:20px;margin-top:32px;font-size:13px}.mc-pagination a{color:#6c4cff;text-decoration:none;font-weight:700}.mc-empty{text-align:center;padding:80px 20px;border:1px dashed #ddd;border-radius:14px}.mc-empty h2{margin:0 0 8px}.mc-empty p{color:#777;margin-bottom:20px}@media(max-width:989px){.mc-collection__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mc-collection h1{font-size:27px}}@media(max-width:600px){.mc-collection{padding-top:22px}.mc-collection__head{align-items:start}.mc-collection__count{padding-top:7px}.mc-collection__grid{gap:9px}.mc-collection .mc-product-card__body{padding:10px}.mc-product-card__title{font-size:12px}.mc-product-card__price{font-size:14px}.mc-product-card__cart{padding:8px;font-size:11px}}
+</style>
+
+{% schema %}{"name":"ManaChoice collection products","settings":[]}{% endschema %}
