@@ -13,7 +13,9 @@
   "sections": {
     "main": {
       "type": "mc-header",
-      "settings": {}
+      "settings": {
+        "logo": "shopify://shop_images/ChatGPT_Image_Sep_11_2026_04_47_05_PM.png"
+      }
     },
     "announcement_bar_UVim6F": {
       "type": "announcement-bar",
