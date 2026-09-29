@@ -152,7 +152,7 @@
       },
       "17465790959685543298": {
         "type": "shopify://apps/partialy/blocks/partialy/c7697383-87de-49f0-a0c2-3e9efd118c12",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       }
     },
