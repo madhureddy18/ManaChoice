@@ -149,6 +149,11 @@
         "type": "shopify://apps/cod-king/blocks/app-embed/99553eb5-bf07-4ce0-9263-7e5f10cab22c",
         "disabled": true,
         "settings": {}
+      },
+      "17465790959685543298": {
+        "type": "shopify://apps/partialy/blocks/partialy/c7697383-87de-49f0-a0c2-3e9efd118c12",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
