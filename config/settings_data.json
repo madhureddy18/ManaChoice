@@ -154,6 +154,13 @@
         "type": "shopify://apps/cod-king/blocks/app-embed/99553eb5-bf07-4ce0-9263-7e5f10cab22c",
         "disabled": true,
         "settings": {}
+      },
+      "3230749641549451810": {
+        "type": "shopify://apps/vol-fees-surcharge/blocks/chargefee-app-embed/019d0602-0ea2-75d0-83cc-ba2fc2c1f16f",
+        "disabled": false,
+        "settings": {
+          "hide_dynamic_checkout_buttons_when_fees_apply": false
+        }
       }
     },
     "color_schemes": {
