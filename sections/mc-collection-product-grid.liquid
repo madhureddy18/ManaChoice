@@ -14,6 +14,7 @@
         {% for product in collection.products %}
           <article class="mc-product-card">
             <a href="{{ product.url }}" class="mc-product-card__image">
+              <button class="mc-wishlist" type="button" data-mc-wishlist data-product-id="{{ product.id }}" data-product-url="{{ product.url }}" data-product-title="{{ product.title | escape }}" data-product-image="{% if product.featured_image %}{{ product.featured_image | image_url: width: 600 }}{% endif %}" data-product-price-cents="{{ product.selected_or_first_available_variant.price }}" aria-label="Add {{ product.title | escape }} to wishlist" aria-pressed="false" onclick="event.preventDefault()">♡</button>
               {% if product.featured_image %}
                 {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '280,420,560,700', alt: product.featured_image.alt | default: product.title | escape }}
               {% else %}
