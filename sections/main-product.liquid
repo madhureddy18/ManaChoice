@@ -26,6 +26,9 @@
   {%- endif -%}
 
   {%- style -%}
+
+  .mc-product-wishlist{display:inline-flex;align-items:center;gap:.7rem;margin:0 0 1.2rem;padding:.8rem 1.2rem;border:1px solid rgba(var(--color-foreground),.2);border-radius:999px;background:transparent;color:rgb(var(--color-foreground));cursor:pointer;font:inherit;font-weight:600}.mc-product-wishlist span:first-child{font-size:2rem;line-height:1}.mc-product-wishlist.is-active{background:rgba(var(--color-button),.08);border-color:rgb(var(--color-button));color:rgb(var(--color-button))}.mc-product-wishlist.is-active span:first-child{font-size:1.75rem}.mc-product-wishlist__label{font-size:1.3rem}
+
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
       padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
@@ -107,6 +110,21 @@
                     </a>
                   </div>
                 {%- when 'price' -%}
+                  <button
+                    type="button"
+                    class="mc-product-wishlist"
+                    data-mc-wishlist
+                    data-product-id="{{ product.id }}"
+                    data-product-url="{{ product.url }}"
+                    data-product-title="{{ product.title | escape }}"
+                    data-product-image="{% if product.featured_image %}{{ product.featured_image | image_url: width: 600 }}{% endif %}"
+                    data-product-price-cents="{{ product.selected_or_first_available_variant.price }}"
+                    aria-label="Add {{ product.title | escape }} to wishlist"
+                    aria-pressed="false"
+                  >
+                    <span aria-hidden="true">♡</span><span class="mc-product-wishlist__label">Add to wishlist</span>
+                  </button>
+
                   <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                     {%- render 'price',
                       product: product,
