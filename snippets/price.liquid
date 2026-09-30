@@ -32,7 +32,7 @@
     Shopify Markets remains responsible for the actual market/product price.
     This does not perform currency conversion or change product prices.
   endcomment
-  assign regional_symbol = localization.country.currency.symbol
+  assign regional_symbol = cart.currency.symbol
 
   assign money_price = price | money_without_currency
   assign money_price_min = price_min | money_without_currency
