@@ -47,7 +47,7 @@
                 {% if product.featured_image %}{{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '260,400,600', alt: product.featured_image.alt | default: product.title | escape }}{% else %}<span>No image</span>{% endif %}
                 {% if product.compare_at_price > product.price %}<b>SALE</b>{% endif %}
               </a>
-              <div class="mc-home-product__body">{% if product.vendor != blank %}<small>{{ product.vendor }}</small>{% endif %}<a href="{{ product.url }}">{{ product.title }}</a><div><strong>{{ cart.currency.symbol }}{{ product.price | money_without_currency }}</strong>{% if product.compare_at_price > product.price %}<del>{{ cart.currency.symbol }}{{ product.compare_at_price | money_without_currency }}</del>{% endif %}</div></div>
+              <div class="mc-home-product__body">{% if product.vendor != blank %}<small>{{ product.vendor }}</small>{% endif %}<a href="{{ product.url }}">{{ product.title }}</a><div><strong data-mc-price-cents="{{ product.price }}">{{ product.price | money }}</strong>{% if product.compare_at_price > product.price %}<del data-mc-compare-cents="{{ product.compare_at_price }}">{{ product.compare_at_price | money }}</del>{% endif %}</div></div>
             </article>
           {% endfor %}
         </div>
@@ -66,7 +66,7 @@
               {% if product.compare_at_price > product.price %}<b>SALE</b>{% endif %}
               <button class="mc-wishlist" type="button" aria-label="Add to wishlist" onclick="event.preventDefault();this.classList.toggle('is-active')">♡</button>
             </a>
-            <div class="mc-home-product__body">{% if product.vendor != blank %}<small>{{ product.vendor }}</small>{% endif %}<a href="{{ product.url }}">{{ product.title }}</a><div><strong>{{ cart.currency.symbol }}{{ product.price | money_without_currency }}</strong>{% if product.compare_at_price > product.price %}<del>{{ cart.currency.symbol }}{{ product.compare_at_price | money_without_currency }}</del>{% endif %}</div><a class="mc-quick-add" href="{{ product.url }}">View product</a></div>
+            <div class="mc-home-product__body">{% if product.vendor != blank %}<small>{{ product.vendor }}</small>{% endif %}<a href="{{ product.url }}">{{ product.title }}</a><div><strong data-mc-price-cents="{{ product.price }}">{{ product.price | money }}</strong>{% if product.compare_at_price > product.price %}<del data-mc-compare-cents="{{ product.compare_at_price }}">{{ product.compare_at_price | money }}</del>{% endif %}</div><a class="mc-quick-add" href="{{ product.url }}">View product</a></div>
           </article>
         {% endfor %}
       </div>
