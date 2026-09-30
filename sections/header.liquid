@@ -91,6 +91,9 @@
     --shopify-account-dialog-position-top: var(--account-dialog-top, var(--header-height, 0px));
   }
 
+
+  .header__icon--wishlist{position:relative;text-decoration:none}.header__icon--wishlist .svg-wrapper svg{width:2rem;height:2rem}.mc-wishlist-count{position:absolute;right:.45rem;top:.35rem;min-width:1.35rem;height:1.35rem;padding:0 .3rem;border-radius:999px;background:rgb(var(--color-button));color:rgb(var(--color-button-text));font-size:.75rem;line-height:1.35rem;text-align:center;font-weight:700;display:none}.mc-wishlist-count.is-visible{display:block}
+
   shopify-account.header__icon:not(:defined) {
     display: flex;
     align-items: center;
@@ -298,6 +301,14 @@
             {% render block %}
         {%- endcase -%}
       {%- endfor -%}
+
+      <a href="/pages/wishlist" class="header__icon header__icon--wishlist link focus-inset" aria-label="Wishlist" title="Wishlist">
+        <span class="svg-wrapper">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="visually-hidden">Wishlist</span>
+        <span class="mc-wishlist-count" aria-hidden="true">0</span>
+      </a>
 
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
         {% if cart == empty %}
