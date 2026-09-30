@@ -28,17 +28,12 @@
   assign available = target.available | default: false
 
   comment
-    UI-only regional currency display.
-    Shopify Markets remains responsible for the actual market/product price.
-    This does not perform currency conversion or change product prices.
+    ManaChoice UI-only currency conversion from the store's INR base price.
+    This changes storefront display only; checkout and Shopify order prices are untouched.
   endcomment
-  assign regional_symbol = cart.currency.symbol
-
   assign money_price = price | money_without_currency
   assign money_price_min = price_min | money_without_currency
   assign money_price_max = price_max | money_without_currency
-  assign money_price_min_display = regional_symbol | append: money_price_min
-  assign money_price_max_display = regional_symbol | append: money_price_max
 
   if target == product and product.price_varies
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
@@ -56,6 +51,10 @@
       {%- if product.price_varies == false and product.compare_at_price_varies %} price--no-compare{% endif -%}
       {%- if show_badges %} price--show-badge{% endif -%}
     "
+    data-mc-price-cents="{{ price }}"
+    {% if compare_at_price > price %}data-mc-compare-cents="{{ compare_at_price }}"{% endif %}
+    data-mc-price-min-cents="{{ price_min }}"
+    data-mc-price-max-cents="{{ price_max }}"
   >
     <div class="price__container">
       {%- comment -%}
@@ -73,9 +72,9 @@
               <span>
                 <s class="price-item price-item--regular variant-item__old-price">
                   {% if settings.currency_code_enabled %}
-                    {{ regional_symbol }}{{ compare_at_price | money_without_currency }}
+                    {{ compare_at_price | money }}
                   {% else %}
-                    {{ regional_symbol }}{{ compare_at_price | money_without_currency }}
+                    {{ compare_at_price | money }}
                   {% endif %}
                 </s>
               </span>
@@ -91,7 +90,7 @@
         {%- else -%}
           <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
           <span class="price-item price-item--regular">
-            {{ regional_symbol }}{{ money_price }}
+            {{ money_price }}
           </span>
         {%- endif -%}
       </div>
@@ -101,16 +100,16 @@
           <span>
             <s class="price-item price-item--regular">
               {% if settings.currency_code_enabled %}
-                {{ regional_symbol }}{{ compare_at_price | money_without_currency }}
+                {{ compare_at_price | money }}
               {% else %}
-                {{ regional_symbol }}{{ compare_at_price | money_without_currency }}
+                {{ compare_at_price | money }}
               {% endif %}
             </s>
           </span>
         {%- endunless -%}
         <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.sale_price' | t }}</span>
         <span class="price-item price-item--sale price-item--last">
-          {{ regional_symbol }}{{ money_price }}
+          {{ money_price }}
         </span>
       </div>
       {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
