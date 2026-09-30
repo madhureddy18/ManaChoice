@@ -10,8 +10,15 @@
   const CONFIG = {
     IN: { currency: 'INR', rate: 1, locale: 'en-IN' },
     US: { currency: 'USD', rate: 95.91, locale: 'en-US' },
+    GB: { currency: 'GBP', rate: 126.90, locale: 'en-US' },
+    AE: { currency: 'AED', rate: 26.11, locale: 'en-US' },
+    CA: { currency: 'CAD', rate: 68.05, locale: 'en-US' },
+    AU: { currency: 'AUD', rate: 65.83, locale: 'en-US' },
     DE: { currency: 'EUR', rate: 108.74, locale: 'en-US' },
-    GB: { currency: 'GBP', rate: 126.90, locale: 'en-US' }
+    SA: { currency: 'SAR', rate: 25.58, locale: 'en-US' },
+    SG: { currency: 'SGD', rate: 75.04, locale: 'en-US' },
+    LK: { currency: 'LKR', rate: 0.302, locale: 'en-US' },
+    JP: { currency: 'JPY', rate: 0.613, locale: 'ja-JP' }
   };
 
   function currentConfig() {
@@ -26,8 +33,8 @@
       style: 'currency',
       currency: config.currency,
       currencyDisplay: 'symbol',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      minimumFractionDigits: config.currency === 'JPY' ? 0 : 2,
+      maximumFractionDigits: config.currency === 'JPY' ? 0 : 2
     }).format(amount);
   }
 
