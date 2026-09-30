@@ -44,6 +44,7 @@
           {% for product in deals_collection.products limit: 5 %}
             <article class="mc-home-product">
               <a href="{{ product.url }}" class="mc-home-product__image">
+                <button class="mc-wishlist" type="button" data-mc-wishlist data-product-id="{{ product.id }}" data-product-url="{{ product.url }}" data-product-title="{{ product.title | escape }}" data-product-image="{% if product.featured_image %}{{ product.featured_image | image_url: width: 600 }}{% endif %}" data-product-price-cents="{{ product.selected_or_first_available_variant.price }}" aria-label="Add {{ product.title | escape }} to wishlist" aria-pressed="false" onclick="event.preventDefault()">♡</button>
                 {% if product.featured_image %}{{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '260,400,600', alt: product.featured_image.alt | default: product.title | escape }}{% else %}<span>No image</span>{% endif %}
                 {% if product.compare_at_price > product.price %}<b>SALE</b>{% endif %}
               </a>
@@ -64,7 +65,7 @@
             <a href="{{ product.url }}" class="mc-home-product__image">
               {% if product.featured_image %}{{ product.featured_image | image_url: width: 650 | image_tag: loading: 'lazy', widths: '280,420,650', alt: product.featured_image.alt | default: product.title | escape }}{% else %}<span>No image</span>{% endif %}
               {% if product.compare_at_price > product.price %}<b>SALE</b>{% endif %}
-              <button class="mc-wishlist" type="button" aria-label="Add to wishlist" onclick="event.preventDefault();this.classList.toggle('is-active')">♡</button>
+              <button class="mc-wishlist" type="button" data-mc-wishlist data-product-id="{{ product.id }}" data-product-url="{{ product.url }}" data-product-title="{{ product.title | escape }}" data-product-image="{% if product.featured_image %}{{ product.featured_image | image_url: width: 600 }}{% endif %}" data-product-price-cents="{{ product.selected_or_first_available_variant.price }}" aria-label="Add {{ product.title | escape }} to wishlist" aria-pressed="false">♡</button>
             </a>
             <div class="mc-home-product__body">{% if product.vendor != blank %}<small>{{ product.vendor }}</small>{% endif %}<a href="{{ product.url }}">{{ product.title }}</a><div><strong data-mc-price-cents="{{ product.price }}">{{ product.price | money }}</strong>{% if product.compare_at_price > product.price %}<del data-mc-compare-cents="{{ product.compare_at_price }}">{{ product.compare_at_price | money }}</del>{% endif %}</div><a class="mc-quick-add" href="{{ product.url }}">View product</a></div>
           </article>
