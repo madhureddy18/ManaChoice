@@ -24,8 +24,8 @@
             <div class="mc-product-card__body">
               {% if product.vendor != blank %}<span class="mc-product-card__vendor">{{ product.vendor }}</span>{% endif %}
               <a href="{{ product.url }}" class="mc-product-card__title">{{ product.title }}</a>
-              <div class="mc-product-card__price">{{ cart.currency.symbol }}{{ product.price | money_without_currency }}</div>
-              {% if product.compare_at_price > product.price %}<span class="mc-product-card__compare">{{ cart.currency.symbol }}{{ product.compare_at_price | money_without_currency }}</span>{% endif %}
+              <div class="mc-product-card__price" data-mc-price-cents="{{ product.price }}">{{ product.price | money }}</div>
+              {% if product.compare_at_price > product.price %}<span class="mc-product-card__compare" data-mc-compare-cents="{{ product.compare_at_price }}">{{ product.compare_at_price | money }}</span>{% endif %}
               <a class="mc-product-card__cart" href="{{ product.url }}">View product</a>
             </div>
           </article>
