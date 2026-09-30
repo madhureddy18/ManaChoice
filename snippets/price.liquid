@@ -26,6 +26,7 @@
   assign price_min = product.price_min
   assign price_max = product.price_max
   assign available = target.available | default: false
+
   comment
     UI-only regional currency display.
     Shopify Markets remains responsible for the actual market/product price.
@@ -82,7 +83,7 @@
           <span class="price-item price-item--regular">
             {{-
               'products.product.volume_pricing.price_range'
-              | t: minimum: regional_symbol | append: money_price_min, maximum: regional_symbol | append: money_price_max
+              | t: minimum: money_price_min_display, maximum: money_price_max_display
             -}}
           </span>
         {%- else -%}
@@ -137,6 +138,8 @@
   assign money_price = price | money_without_currency
   assign money_price_min = price_min | money_without_currency
   assign money_price_max = price_max | money_without_currency
+  assign money_price_min_display = regional_symbol | append: money_price_min
+  assign money_price_max_display = regional_symbol | append: money_price_max
 
   if target == product and product.price_varies
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
@@ -183,7 +186,7 @@
           <span class="price-item price-item--regular">
             {{-
               'products.product.volume_pricing.price_range'
-              | t: minimum: regional_symbol | append: money_price_min, maximum: regional_symbol | append: money_price_max
+              | t: minimum: money_price_min, maximum: money_price_max
             -}}
           </span>
         {%- else -%}
