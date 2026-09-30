@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "mc-wishlist",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
