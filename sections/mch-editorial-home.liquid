@@ -1,0 +1,105 @@
+<section class="mch-home">
+{% assign products = collections[section.settings.product_collection].products %}
+{% assign deals = collections[section.settings.deals_collection].products %}
+<div class="mch-hero">
+  <div class="mch-hero__image">
+    {% if products.size > 0 and products[0].featured_image %}
+      {{ products[0].featured_image | image_url: width: 1800 | image_tag: loading: 'eager', widths: '900,1200,1600,1800', sizes: '60vw', alt: products[0].title | escape }}
+    {% else %}
+      <div class="mch-hero__blank"></div>
+    {% endif %}
+  </div>
+  <div class="mch-hero__copy">
+    <span class="mch-kicker">MANA CHOICE / NEW ARRIVALS</span>
+    <h1>Find your<br><em>next favorite.</em></h1>
+    <p>A considered mix of fashion, tech, home and everyday finds.</p>
+    <a href="/collections/all-products">SHOP NEW ARRIVALS <span>↗</span></a>
+  </div>
+</div>
+
+<div class="mch-strip">
+  <span>FREE SHIPPING</span><i>·</i><span>EASY RETURNS</span><i>·</i><span>SECURE CHECKOUT</span><i>·</i><span>NEW FINDS EVERY WEEK</span>
+</div>
+
+<div class="mch-wrap">
+<section class="mch-section mch-cats">
+  <div class="mch-section-head"><div><span class="mch-kicker">EXPLORE</span><h2>Shop your way</h2></div><a href="/collections/all-products">View all ↗</a></div>
+  <div class="mch-cat-grid">
+    <a class="mch-cat mch-cat--wide" href="/collections/fashion">
+      <div class="mch-cat__visual">{% if products.size > 1 and products[1].featured_image %}{{ products[1].featured_image | image_url: width: 1100 | image_tag: loading: 'lazy', alt: 'Fashion' }}{% endif %}</div>
+      <div class="mch-cat__label"><small>01</small><strong>FASHION</strong><span>Style for every day ↗</span></div>
+    </a>
+    <a class="mch-cat" href="/collections/electronics">
+      <div class="mch-cat__visual">{% if products.size > 2 and products[2].featured_image %}{{ products[2].featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'Tech' }}{% endif %}</div>
+      <div class="mch-cat__label"><small>02</small><strong>TECH</strong><span>Smart accessories ↗</span></div>
+    </a>
+    <a class="mch-cat" href="/collections/home">
+      <div class="mch-cat__visual">{% if products.size > 3 and products[3].featured_image %}{{ products[3].featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'Home' }}{% endif %}</div>
+      <div class="mch-cat__label"><small>03</small><strong>HOME</strong><span>Better everyday living ↗</span></div>
+    </a>
+    <a class="mch-cat" href="/collections/travel">
+      <div class="mch-cat__visual">{% if products.size > 4 and products[4].featured_image %}{{ products[4].featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'Travel' }}{% endif %}</div>
+      <div class="mch-cat__label"><small>04</small><strong>TRAVEL</strong><span>Go a little further ↗</span></div>
+    </a>
+  </div>
+</section>
+
+{% if products.size > 0 %}
+<section class="mch-section">
+  <div class="mch-section-head"><div><span class="mch-kicker">THE EDIT</span><h2>New & noteworthy</h2></div><a href="/collections/all-products">Shop everything ↗</a></div>
+  <div class="mch-products">
+    {% for product in products limit: 8 %}
+      <article class="mch-product">
+        <a href="{{ product.url }}" class="mch-product__image">
+          {% if product.featured_image %}{{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '450,650,900', sizes: '(min-width: 1100px) 25vw, 50vw', alt: product.featured_image.alt | default: product.title | escape }}{% endif %}
+          {% if product.media.size > 1 and product.media[1].preview_image %}{{ product.media[1].preview_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '450,650,900', sizes: '(min-width: 1100px) 25vw, 50vw', alt: product.title | escape, class: 'mch-product__hover' }}{% endif %}
+          <button type="button" class="mch-heart" data-mc-wishlist data-product-id="{{ product.id }}" data-product-url="{{ product.url }}" data-product-title="{{ product.title | escape }}" data-product-image="{% if product.featured_image %}{{ product.featured_image | image_url: width: 600 }}{% endif %}" data-product-price-cents="{{ product.selected_or_first_available_variant.price }}" aria-label="Add to wishlist" onclick="event.preventDefault();event.stopPropagation()">♡</button>
+          {% if product.compare_at_price > product.price %}<span class="mch-sale">SALE</span>{% endif %}
+        </a>
+        <div class="mch-product__meta">
+          <a href="{{ product.url }}">{{ product.title }}</a>
+          <strong>{{ product.price | money }}</strong>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if deals.size > 0 %}
+<section class="mch-campaign">
+  <div class="mch-campaign__copy"><span class="mch-kicker">WEEKEND EDIT</span><h2>Small upgrades.<br>Big difference.</h2><p>A focused edit of useful pieces at prices worth a second look.</p><a href="{{ collections[section.settings.deals_collection].url }}">SHOP THE EDIT ↗</a></div>
+  <div class="mch-campaign__products">
+    {% for product in deals limit: 3 %}
+      <a href="{{ product.url }}"><div>{% if product.featured_image %}{{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title | escape }}{% endif %}</div><span>{{ product.title }}</span><strong>{{ product.price | money }}</strong></a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="mch-service">
+  <div><span>01</span><strong>Easy shopping</strong><p>Simple discovery from first click to checkout.</p></div>
+  <div><span>02</span><strong>Secure payments</strong><p>Protected checkout and trusted payment options.</p></div>
+  <div><span>03</span><strong>Easy returns</strong><p>Clear support when something isn't right.</p></div>
+  <div><span>04</span><strong>Fresh curation</strong><p>New products and useful finds added regularly.</p></div>
+</section>
+</div>
+</section>
+
+<style>
+.mch-home{background:#fff;color:#111;font-family:var(--font-body-family,Arial,sans-serif);padding-bottom:80px}
+.mch-wrap{max-width:1380px;margin:auto;padding:0 32px}
+.mch-kicker{font-size:10px;font-weight:700;letter-spacing:.18em;line-height:1;text-transform:uppercase;display:block;margin-bottom:13px}
+.mch-hero{min-height:calc(100vh - 145px);max-height:820px;position:relative;display:grid;grid-template-columns:50% 50%;overflow:hidden;background:#f1eee8}
+.mch-hero__image{grid-column:2;grid-row:1;overflow:hidden;background:#e9e5dd}.mch-hero__image img{width:100%;height:100%;object-fit:cover;display:block}.mch-hero__blank{height:100%;background:#e9e5dd}
+.mch-hero__copy{grid-column:1;grid-row:1;display:flex;flex-direction:column;justify-content:center;padding:7vw;z-index:2}.mch-hero__copy h1{font-size:clamp(58px,7vw,108px);line-height:.87;letter-spacing:-.065em;font-weight:500;margin:0 0 27px}.mch-hero__copy h1 em{font-style:italic;font-family:Georgia,serif;font-weight:400}.mch-hero__copy p{font-size:15px;line-height:1.55;max-width:390px;color:#555;margin:0 0 29px}.mch-hero__copy>a{width:max-content;color:#111;text-decoration:none;font-size:11px;font-weight:800;letter-spacing:.09em;border-bottom:1px solid #111;padding-bottom:7px}.mch-hero__copy>a span{margin-left:14px}
+.mch-strip{display:flex;justify-content:center;align-items:center;gap:18px;padding:12px 15px;background:#111;color:#fff;font-size:9px;letter-spacing:.13em}.mch-strip i{font-style:normal;opacity:.45}
+.mch-section{padding-top:88px}.mch-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:24px}.mch-section-head h2{font-size:34px;line-height:1;letter-spacing:-.04em;font-weight:500;margin:0}.mch-section-head>a{color:#111;text-decoration:none;font-size:10px;font-weight:700;letter-spacing:.05em;border-bottom:1px solid #111;padding-bottom:5px}
+.mch-cat-grid{display:grid;grid-template-columns:1.35fr .9fr .9fr .9fr;gap:10px}.mch-cat{height:430px;position:relative;overflow:hidden;text-decoration:none;color:#fff;background:#e6e1d9}.mch-cat--wide{height:530px}.mch-cat__visual,.mch-cat__visual img{width:100%;height:100%;display:block}.mch-cat__visual img{object-fit:cover;transition:transform .5s ease}.mch-cat:hover .mch-cat__visual img{transform:scale(1.035)}.mch-cat:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.58))}.mch-cat__label{position:absolute;z-index:2;left:18px;right:18px;bottom:18px;display:grid;grid-template-columns:25px 1fr}.mch-cat__label small{font-size:9px;opacity:.8}.mch-cat__label strong{font-size:21px;letter-spacing:.02em}.mch-cat__label span{grid-column:2;font-size:10px;margin-top:4px}
+.mch-products{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 15px}.mch-product__image{display:block;position:relative;overflow:hidden;background:#f3f2ef;aspect-ratio:4/5}.mch-product__image>img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s,transform .4s}.mch-product__hover{position:absolute!important;inset:0;opacity:0}.mch-product:hover .mch-product__hover{opacity:1}.mch-product:hover .mch-product__image>img:first-child{opacity:0}.mch-product:hover .mch-product__image>img{transform:scale(1.02)}.mch-heart{position:absolute;right:10px;top:10px;border:0;background:#fff;border-radius:50%;width:35px;height:35px;font-size:18px;cursor:pointer;z-index:3}.mch-sale{position:absolute;left:10px;top:10px;background:#111;color:#fff;padding:6px 8px;font-size:8px;letter-spacing:.1em;font-weight:800}.mch-product__meta{padding:11px 0 0}.mch-product__meta>a{display:block;color:#111;text-decoration:none;font-size:12px;line-height:1.4;min-height:34px}.mch-product__meta strong{display:block;font-size:12px;margin-top:6px}
+.mch-campaign{margin-top:88px;display:grid;grid-template-columns:1fr 1.55fr;background:#eeeae2;min-height:480px}.mch-campaign__copy{padding:65px;display:flex;flex-direction:column;justify-content:center}.mch-campaign__copy h2{font-size:55px;line-height:.9;letter-spacing:-.055em;font-weight:500;margin:0 0 20px}.mch-campaign__copy p{max-width:330px;font-size:13px;color:#5b5b5b;line-height:1.55;margin:0 0 25px}.mch-campaign__copy a{width:max-content;color:#111;text-decoration:none;font-size:10px;font-weight:800;letter-spacing:.08em;border-bottom:1px solid #111;padding-bottom:6px}.mch-campaign__products{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#d7d3cb}.mch-campaign__products>a{background:#eeeae2;color:#111;text-decoration:none;padding:18px}.mch-campaign__products>a>div{aspect-ratio:1/1.15;overflow:hidden;background:#f4f2ed}.mch-campaign__products img{width:100%;height:100%;object-fit:cover;display:block;mix-blend-mode:multiply}.mch-campaign__products span{display:block;font-size:10px;line-height:1.4;margin-top:11px}.mch-campaign__products strong{font-size:11px;display:block;margin-top:5px}
+.mch-service{margin-top:88px;border-top:1px solid #d7d7d7;border-bottom:1px solid #d7d7d7;display:grid;grid-template-columns:repeat(4,1fr)}.mch-service>div{padding:25px 18px 27px;border-right:1px solid #d7d7d7}.mch-service>div:last-child{border-right:0}.mch-service span{display:block;font-size:9px;color:#888;margin-bottom:18px}.mch-service strong{font-size:12px}.mch-service p{font-size:10px;color:#777;line-height:1.5;margin:7px 0 0}
+@media(max-width:1000px){.mch-cat-grid{grid-template-columns:repeat(2,1fr)}.mch-cat,.mch-cat--wide{height:400px}.mch-products{grid-template-columns:repeat(3,1fr)}.mch-campaign{grid-template-columns:1fr}.mch-campaign__copy{padding:50px}.mch-service{grid-template-columns:repeat(2,1fr)}.mch-service>div:nth-child(2){border-right:0}.mch-service>div:nth-child(-n+2){border-bottom:1px solid #d7d7d7}}
+@media(max-width:700px){.mch-wrap{padding:0 14px}.mch-hero{min-height:auto;display:flex;flex-direction:column}.mch-hero__image{order:1;height:62vw;max-height:520px}.mch-hero__copy{order:2;padding:35px 20px 45px}.mch-hero__copy h1{font-size:55px}.mch-strip{overflow:hidden;justify-content:flex-start;white-space:nowrap;font-size:8px;gap:11px}.mch-strip span:nth-of-type(3),.mch-strip i:nth-of-type(3){display:none}.mch-section{padding-top:55px}.mch-section-head h2{font-size:27px}.mch-cat-grid{grid-template-columns:repeat(2,1fr);gap:7px}.mch-cat,.mch-cat--wide{height:280px}.mch-cat__label{left:11px;right:11px;bottom:12px}.mch-cat__label strong{font-size:15px}.mch-products{grid-template-columns:repeat(2,1fr);gap:18px 9px}.mch-product__meta>a{font-size:11px}.mch-campaign{margin-top:55px}.mch-campaign__copy{padding:38px 22px}.mch-campaign__copy h2{font-size:42px}.mch-campaign__products{grid-template-columns:repeat(3,1fr)}.mch-campaign__products>a{padding:9px}.mch-campaign__products span{font-size:9px}.mch-service{margin-top:55px;grid-template-columns:1fr}.mch-service>div{border-right:0!important;border-bottom:1px solid #d7d7d7}.mch-service>div:last-child{border-bottom:0}}
+</style>
+{% schema %}{"name":"ManaChoice new editorial home","settings":[{"type":"collection","id":"product_collection","label":"Product collection"},{"type":"collection","id":"deals_collection","label":"Deals collection"}],"presets":[{"name":"ManaChoice new editorial home"}]}{% endschema %}
