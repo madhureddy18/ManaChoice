@@ -1,25 +1,18 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "marketplace": {
       "type": "mc-marketplace-home",
       "settings": {
-        "heading": "Discover more. Shop smarter.",
-        "subheading": "Trending products, useful finds, everyday essentials and deals — all in one marketplace.",
-        "primary_label": "Shop now",
-        "primary_link": "shopify://collections/all-products",
-        "secondary_label": "Explore deals",
-        "secondary_link": "shopify://collections/deals",
+        "hero_eyebrow": "NEW SEASON · EVERYDAY EDIT",
+        "hero_heading": "Make everyday better.",
+        "hero_subheading": "Useful, good-looking finds for the way you live, work and move.",
+        "hero_button": "SHOP NEW",
+        "hero_link": "/collections/all-products",
         "featured_collection": "all-products",
-        "deals_collection": "deals"
+        "deals_collection": "deals",
+        "story_heading": "Things worth taking with you.",
+        "story_text": "A small edit of useful pieces, smart accessories and easy upgrades for the weekend and beyond.",
+        "story_button": "EXPLORE THE EDIT"
       }
     }
   },
