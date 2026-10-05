@@ -1,20 +1,12 @@
 {
   "sections": {
-    "marketplace": {
-      "type": "mc-marketplace-home",
+    "mch_home": {
+      "type": "mch-editorial-home",
       "settings": {
-        "hero_eyebrow": "NEW SEASON · EVERYDAY EDIT",
-        "hero_heading": "Make everyday better.",
-        "hero_subheading": "Useful, good-looking finds for the way you live, work and move.",
-        "hero_button": "SHOP NEW",
-        "hero_link": "/collections/all-products",
-        "featured_collection": "all-products",
-        "deals_collection": "deals",
-        "story_heading": "Things worth taking with you.",
-        "story_text": "A small edit of useful pieces, smart accessories and easy upgrades for the weekend and beyond.",
-        "story_button": "EXPLORE THE EDIT"
+        "product_collection": "all-products",
+        "deals_collection": "deals"
       }
     }
   },
-  "order": ["marketplace"]
+  "order": ["mch_home"]
 }
