@@ -1,0 +1,201 @@
+{%- liquid
+  assign mc_products_collection = section.settings.product_collection
+  if mc_products_collection == blank
+    assign mc_products_collection = collections['all']
+  endif
+  assign mc_products = mc_products_collection.products
+  assign mc_deals = section.settings.deals_collection.products
+
+  assign mc_hero_product = mc_products.first
+  assign mc_float_product = mc_products[1]
+  assign mc_hero_image = section.settings.hero_image
+  if mc_hero_image == blank
+    assign mc_hero_image = mc_hero_product.featured_image
+  endif
+-%}
+
+<section class="mc-hero">
+  <div class="mc-container mc-hero__grid">
+    <div class="mc-hero__copy">
+      <p class="mc-kicker">{{ section.settings.kicker | escape }}</p>
+      <h1>{{ section.settings.heading }}</h1>
+      <p class="mc-hero__text">{{ section.settings.text | escape }}</p>
+      <div class="mc-hero__cta">
+        <a class="mc-btn" href="{{ mc_products_collection.url | default: routes.all_products_collection_url }}">{{ section.settings.primary_label | escape }} {% render 'mc-icon', name: 'arrow', size: 18 %}</a>
+        <a class="mc-btn mc-btn--ghost" href="{{ routes.collections_url }}">{{ section.settings.secondary_label | escape }}</a>
+      </div>
+      <ul class="mc-hero__perks" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'perk' -%}
+            <li {{ block.shopify_attributes }}>{% render 'mc-icon', name: block.settings.icon, size: 20 %}{{ block.settings.text | escape }}</li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <div class="mc-hero__visual">
+      <div class="mc-hero__frame">
+        {%- if mc_hero_image != blank -%}
+          {{ mc_hero_image | image_url: width: 1000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '500,700,900,1000', sizes: '(min-width: 900px) 40vw, 80vw', alt: mc_hero_image.alt | default: section.settings.heading | strip_html | escape }}
+        {%- endif -%}
+      </div>
+      {%- if mc_float_product != blank and mc_float_product.featured_image -%}
+        <a class="mc-hero__float" href="{{ mc_float_product.url }}">
+          {{ mc_float_product.featured_image | image_url: width: 160 | image_tag: loading: 'eager', width: 58, height: 58, alt: '' }}
+          <div>
+            <small>Just in</small>
+            <strong>{{ mc_float_product.title }}</strong>
+            <span data-mc-price-cents="{{ mc_float_product.price }}">{{ mc_float_product.price | money }}</span>
+          </div>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- liquid
+  assign mc_cat_list = section.settings.categories
+  assign mc_cat_count = 0
+-%}
+<section class="mc-section">
+  <div class="mc-container">
+    <div class="mc-section-head">
+      <div>
+        <p class="mc-kicker">Explore</p>
+        <h2>Shop by category</h2>
+      </div>
+      <a class="mc-link" href="{{ routes.collections_url }}">All collections {% render 'mc-icon', name: 'arrow', size: 16 %}</a>
+    </div>
+    <div class="mc-cats">
+      {%- if mc_cat_list.size > 0 -%}
+        {%- for c in mc_cat_list -%}
+          {%- assign mc_cimg = c.featured_image | default: c.products.first.featured_image -%}
+          <a class="mc-cat" href="{{ c.url }}">
+            {%- if mc_cimg != blank -%}{{ mc_cimg | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,500,700', sizes: '(min-width: 990px) 20vw, 46vw', alt: c.title | escape }}{%- endif -%}
+            <span class="mc-cat__label"><span><strong>{{ c.title }}</strong><small>{{ c.products_count }} products</small></span><span class="mc-cat__go">{% render 'mc-icon', name: 'arrow', size: 18 %}</span></span>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for c in collections limit: 24 -%}
+          {%- if c.handle != 'frontpage' and c.handle != 'all' and c.handle != 'all-products' and c.products_count > 0 and mc_cat_count < 4 -%}
+            {%- assign mc_cat_count = mc_cat_count | plus: 1 -%}
+            {%- assign mc_cimg = c.featured_image | default: c.products.first.featured_image -%}
+            <a class="mc-cat" href="{{ c.url }}">
+              {%- if mc_cimg != blank -%}{{ mc_cimg | image_url: width: 700 | image_tag: loading: 'lazy', widths: '350,500,700', sizes: '(min-width: 990px) 22vw, 46vw', alt: c.title | escape }}{%- endif -%}
+              <span class="mc-cat__label"><span><strong>{{ c.title }}</strong><small>{{ c.products_count }} products</small></span><span class="mc-cat__go">{% render 'mc-icon', name: 'arrow', size: 18 %}</span></span>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- if mc_products.size > 0 -%}
+  <section class="mc-section">
+    <div class="mc-container">
+      <div class="mc-section-head">
+        <div>
+          <p class="mc-kicker">The edit</p>
+          <h2>New &amp; noteworthy</h2>
+        </div>
+        <a class="mc-link" href="{{ mc_products_collection.url | default: routes.all_products_collection_url }}">Shop everything {% render 'mc-icon', name: 'arrow', size: 16 %}</a>
+      </div>
+      <div class="mc-grid">
+        {%- for product in mc_products limit: 8 -%}
+          {% render 'mc-product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{%- if mc_deals.size > 0 -%}
+  <section class="mc-section">
+    <div class="mc-container">
+      <div class="mc-feature">
+        <div class="mc-feature__copy">
+          <p class="mc-kicker">{{ section.settings.deals_kicker | escape }}</p>
+          <h2>{{ section.settings.deals_heading }}</h2>
+          <p>{{ section.settings.deals_text | escape }}</p>
+          <a class="mc-btn mc-btn--gold" href="{{ section.settings.deals_collection.url }}">{{ section.settings.deals_label | escape }} {% render 'mc-icon', name: 'arrow', size: 18 %}</a>
+        </div>
+        <div class="mc-feature__items">
+          {%- for product in mc_deals limit: 3 -%}
+            <a class="mc-mini" href="{{ product.url }}">
+              <div class="mc-mini__img">{%- if product.featured_image -%}{{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,375,500', sizes: '(min-width: 990px) 16vw, 30vw', alt: product.title | escape }}{%- endif -%}</div>
+              <strong>{{ product.title }}</strong>
+              <span data-mc-price-cents="{{ product.price }}">{{ product.price | money }}</span>
+            </a>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+<section class="mc-section">
+  <div class="mc-container">
+    <div class="mc-services">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'service' -%}
+          <div class="mc-service" {{ block.shopify_attributes }}>
+            <span class="mc-service__icon">{% render 'mc-icon', name: block.settings.icon, size: 24 %}</span>
+            <h3>{{ block.settings.title | escape }}</h3>
+            <p>{{ block.settings.text | escape }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ManaChoice home",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "kicker", "label": "Small heading", "default": "New arrivals every week" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Discover things you'll wish you <em>found sooner.</em>" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "A curated mix of fashion, tech, home and everyday finds, chosen with care and delivered with confidence." },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "Shop new arrivals" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button", "default": "Browse collections" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image", "info": "Optional. Uses the first product's photo when empty." },
+    { "type": "header", "content": "Products" },
+    { "type": "collection", "id": "product_collection", "label": "Featured collection" },
+    { "type": "collection_list", "id": "categories", "label": "Category tiles", "limit": 6, "info": "Optional. Leave empty to show your first collections automatically." },
+    { "type": "header", "content": "Offers panel" },
+    { "type": "collection", "id": "deals_collection", "label": "Deals collection" },
+    { "type": "text", "id": "deals_kicker", "label": "Small heading", "default": "Weekend edit" },
+    { "type": "inline_richtext", "id": "deals_heading", "label": "Heading", "default": "Small upgrades. <em>Big difference.</em>" },
+    { "type": "textarea", "id": "deals_text", "label": "Text", "default": "A focused edit of useful pieces at prices worth a second look." },
+    { "type": "text", "id": "deals_label", "label": "Button", "default": "Shop the edit" }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Hero highlight",
+      "limit": 4,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+          { "value": "truck", "label": "Delivery" }, { "value": "shield", "label": "Secure" }, { "value": "return", "label": "Returns" }, { "value": "sparkle", "label": "Sparkle" }, { "value": "check", "label": "Check" }
+        ], "default": "truck" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping on eligible orders" }
+      ]
+    },
+    {
+      "type": "service",
+      "name": "Service card",
+      "limit": 4,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+          { "value": "truck", "label": "Delivery" }, { "value": "shield", "label": "Secure" }, { "value": "return", "label": "Returns" }, { "value": "sparkle", "label": "Sparkle" }, { "value": "check", "label": "Check" }
+        ], "default": "sparkle" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Curated for you" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "New products and useful finds added regularly." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "ManaChoice home" }]
+}
+{% endschema %}

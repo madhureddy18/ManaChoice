@@ -1,12 +1,22 @@
 {
   "sections": {
-    "mch_home": {
-      "type": "mch-editorial-home",
+    "home": {
+      "type": "mc-home",
+      "blocks": {
+        "perk_1": { "type": "perk", "settings": { "icon": "truck", "text": "Free shipping on eligible orders" } },
+        "perk_2": { "type": "perk", "settings": { "icon": "shield", "text": "Secure checkout" } },
+        "perk_3": { "type": "perk", "settings": { "icon": "return", "text": "Easy returns" } },
+        "svc_1": { "type": "service", "settings": { "icon": "sparkle", "title": "Easy shopping", "text": "Simple discovery from first click to checkout." } },
+        "svc_2": { "type": "service", "settings": { "icon": "shield", "title": "Secure payments", "text": "Protected checkout and trusted payment options." } },
+        "svc_3": { "type": "service", "settings": { "icon": "return", "title": "Easy returns", "text": "Clear support when something isn't right." } },
+        "svc_4": { "type": "service", "settings": { "icon": "truck", "title": "Reliable delivery", "text": "Track your order from dispatch to your door." } }
+      },
+      "block_order": ["perk_1", "perk_2", "perk_3", "svc_1", "svc_2", "svc_3", "svc_4"],
       "settings": {
         "product_collection": "all-products",
         "deals_collection": "deals"
       }
     }
   },
-  "order": ["mch_home"]
+  "order": ["home"]
 }

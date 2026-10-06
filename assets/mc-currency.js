@@ -38,13 +38,17 @@
     }).format(amount);
   }
 
+  function setText(node, text) {
+    if (node.textContent !== text) node.textContent = text;
+  }
+
   function convertElement(element, config) {
     const cents = Number(element.dataset.mcPriceCents);
     if (!Number.isFinite(cents)) return;
 
     // Custom ManaChoice product cards use the element itself.
     if (!element.classList.contains('price')) {
-      element.textContent = format(cents, config);
+      setText(element, format(cents, config));
       return;
     }
 
@@ -53,17 +57,17 @@
     const sale = element.querySelector('.price-item--sale');
 
     if (regular && !element.classList.contains('price--on-sale')) {
-      regular.textContent = format(cents, config);
+      setText(regular, format(cents, config));
     }
     if (sale) {
-      sale.textContent = format(cents, config);
+      setText(sale, format(cents, config));
     }
 
     const compareCents = Number(element.dataset.mcCompareCents);
     if (Number.isFinite(compareCents)) {
       element.querySelectorAll('.price-item--regular').forEach((node) => {
         // Only strike-through/old-price nodes should receive compare-at value.
-        if (node.closest('s')) node.textContent = format(compareCents, config);
+        if (node.closest('s')) setText(node, format(compareCents, config));
       });
     }
 
@@ -72,7 +76,7 @@
     if (Number.isFinite(minCents) && Number.isFinite(maxCents) && minCents !== maxCents) {
       const range = element.querySelector('.price-item--regular');
       if (range) {
-        range.textContent = format(minCents, config) + ' – ' + format(maxCents, config);
+        setText(range, format(minCents, config) + ' – ' + format(maxCents, config));
       }
     }
   }
@@ -84,7 +88,7 @@
     });
     document.querySelectorAll('[data-mc-compare-cents]').forEach((element) => {
       const cents = Number(element.dataset.mcCompareCents);
-      if (Number.isFinite(cents)) element.textContent = format(cents, config);
+      if (Number.isFinite(cents)) setText(element, format(cents, config));
     });
   }
 
@@ -98,6 +102,7 @@
     });
   }
 
+  window.ManaChoiceCurrency = { refresh: refresh };
   document.addEventListener('DOMContentLoaded', refresh);
   new MutationObserver(scheduleRefresh).observe(document.documentElement, {
     childList: true,

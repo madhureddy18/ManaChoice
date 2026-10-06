@@ -42,7 +42,9 @@
         button.setAttribute('aria-label', (active ? 'Remove ' : 'Add ') + button.dataset.productTitle + ' ' + (active ? 'from' : 'to') + ' wishlist');
       }
       var icon = button.querySelector('[aria-hidden="true"]');
-      if (icon) icon.textContent = active ? '♥' : '♡';
+      if (button.querySelector('svg')) {
+        /* SVG heart: the .is-active class fills it via CSS */
+      } else if (icon) icon.textContent = active ? '♥' : '♡';
       else if (!button.classList.contains('mc-product-wishlist')) button.textContent = active ? '♥' : '♡';
     });
   }

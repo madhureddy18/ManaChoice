@@ -1,0 +1,49 @@
+{%- comment -%}
+  ManaChoice product card. Usage: {% render 'mc-product-card', product: product, eager: false %}
+  The wishlist button is a sibling of the link (never nested inside it).
+{%- endcomment -%}
+{%- liquid
+  assign mc_p = product
+  assign mc_sale = false
+  assign mc_off = 0
+  if mc_p.compare_at_price > mc_p.price and mc_p.available
+    assign mc_sale = true
+    assign mc_off = mc_p.compare_at_price | minus: mc_p.price | times: 100.0 | divided_by: mc_p.compare_at_price | round
+  endif
+  assign mc_loading = 'lazy'
+  if eager
+    assign mc_loading = 'eager'
+  endif
+  assign mc_alt = mc_p.featured_image.alt | default: mc_p.title
+-%}
+<article class="mc-card">
+  <div class="mc-card__media">
+    <a href="{{ mc_p.url }}" class="mc-card__link" tabindex="-1" aria-hidden="true">
+      {%- if mc_p.featured_image -%}
+        {{ mc_p.featured_image | image_url: width: 800 | image_tag: loading: mc_loading, widths: '360,480,640,800', sizes: '(min-width: 990px) 22vw, (min-width: 690px) 30vw, 46vw', alt: mc_alt, class: 'mc-card__img1' }}
+        {%- if mc_p.media.size > 1 and mc_p.media[1].preview_image -%}
+          {{ mc_p.media[1].preview_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '360,480,640,800', sizes: '(min-width: 990px) 22vw, (min-width: 690px) 30vw, 46vw', alt: '', class: 'mc-card__img2' }}
+        {%- endif -%}
+      {%- else -%}
+        <span class="mc-card__empty">No image</span>
+      {%- endif -%}
+    </a>
+    {%- if mc_p.available == false -%}
+      <span class="mc-badge mc-badge--soldout">Sold out</span>
+    {%- elsif mc_sale -%}
+      <span class="mc-badge">Sale</span>
+    {%- endif -%}
+    <button type="button" class="mc-heart" data-mc-wishlist data-product-id="{{ mc_p.id }}" data-product-url="{{ mc_p.url }}" data-product-title="{{ mc_p.title | escape }}" data-product-image="{% if mc_p.featured_image %}{{ mc_p.featured_image | image_url: width: 600 }}{% endif %}" data-product-price-cents="{{ mc_p.selected_or_first_available_variant.price }}" aria-label="Add {{ mc_p.title | escape }} to wishlist" aria-pressed="false">{% render 'mc-icon', name: 'heart', size: 20 %}</button>
+  </div>
+  <div class="mc-card__body">
+    {%- if mc_p.vendor != blank and show_vendor != false -%}<span class="mc-card__vendor">{{ mc_p.vendor }}</span>{%- endif -%}
+    <a href="{{ mc_p.url }}" class="mc-card__title">{{ mc_p.title }}</a>
+    <div class="mc-card__price-row">
+      <span class="mc-card__price" data-mc-price-cents="{{ mc_p.price }}">{{ mc_p.price | money }}</span>
+      {%- if mc_sale -%}
+        <s class="mc-card__compare" data-mc-compare-cents="{{ mc_p.compare_at_price }}">{{ mc_p.compare_at_price | money }}</s>
+        <span class="mc-card__off">{{ mc_off }}% off</span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

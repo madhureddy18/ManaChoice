@@ -1,39 +1,71 @@
-{{ 'mc-finish.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'mc-finish.js' | asset_url }}" defer="defer"></script>
-<style>
-.mc-header{position:relative;z-index:30;background:#fff;color:#111;border-bottom:1px solid #e9e9e9}
-.mc-header__notice{font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-align:center;padding:8px 16px;border-bottom:1px solid #efefef}
-.mc-header__main{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:72px;gap:28px}
-.mc-header__brand{justify-self:start;text-decoration:none;color:#111;line-height:1;display:flex;align-items:center}
-.mc-header__brand img{display:block;max-height:44px;width:auto;max-width:180px;object-fit:contain}
-.mc-header__brand-text{font-size:25px;font-weight:800;letter-spacing:-1.3px}.mc-header__brand-text b{font-weight:900}
-.mc-header__nav{justify-self:center;display:flex;align-items:center;gap:26px}
-.mc-header__nav a{color:#111;text-decoration:none;font-size:12px;font-weight:600;letter-spacing:.03em;position:relative;padding:28px 0}
-.mc-header__nav a:after{content:"";position:absolute;left:0;right:100%;bottom:21px;height:1px;background:#111;transition:right .2s ease}
-.mc-header__nav a:hover:after{right:0}
-.mc-header__tools{justify-self:end;display:flex;align-items:center;gap:17px}
-.mc-header__tools a{border:0;background:none;color:#111;text-decoration:none;padding:0;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-.mc-header__tools svg{width:19px;height:19px}.mc-header__bag{position:relative}
-.mc-header__bag-count{position:absolute;right:-9px;top:-8px;min-width:15px;height:15px;padding:0 4px;border-radius:50%;display:grid;place-items:center;background:#111;color:#fff;font-size:9px;line-height:1}
-.mc-header__mobile-row{display:none}
-@media(max-width:989px){.mc-header__main{grid-template-columns:auto 1fr auto;min-height:60px;gap:14px}.mc-header__brand img{max-width:150px;max-height:38px}.mc-header__brand-text{font-size:22px}.mc-header__nav{display:none}.mc-header__notice{font-size:9px;padding:7px 10px}.mc-header__mobile-row{display:flex;border-top:1px solid #efefef;padding:10px 0}.mc-header__mobile-search{display:flex;align-items:center;border:1px solid #d8d8d8;height:40px;width:100%}.mc-header__mobile-search input{flex:1;border:0;outline:0;padding:0 12px;background:transparent;font:inherit;font-size:12px}.mc-header__mobile-search button{border:0;background:none;padding:0 12px;cursor:pointer}}
-@media(max-width:600px){.mc-header__tools{gap:11px}.mc-header__tools a:nth-child(2){display:none}.mc-header__main{padding:0 14px}.mc-header__mobile-row{padding:9px 14px}}
-</style>
+{%- liquid
+  assign mc_logo = section.settings.logo
+-%}
+{%- if section.settings.announcement != blank -%}
+  <div class="mc-announce">{{ section.settings.announcement | escape }}</div>
+{%- endif -%}
 <header class="mc-header">
-<div class="mc-header__notice">Free shipping on eligible orders &nbsp; · &nbsp; Easy returns</div>
-<div class="page-width mc-header__main">
-<a class="mc-header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
-{% if section.settings.logo != blank %}<img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" loading="eager">{% else %}<span class="mc-header__brand-text">MANA<b>CHOICE</b></span>{% endif %}
-</a>
-<nav class="mc-header__nav" aria-label="Main navigation">
-<a href="/collections/all-products">NEW</a><a href="/collections/all-products">SHOP</a><a href="/collections/all-products">BESTSELLERS</a><a href="/collections/electronics">TECH</a><a href="/collections/home">HOME</a><a href="/collections/fashion">FASHION</a><a href="/collections/deals">SALE</a>
-</nav>
-<div class="mc-header__tools" aria-label="Account actions">
-<a href="{{ routes.search_url }}" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 5 5"/></svg></a>
-<a href="/pages/wishlist" aria-label="Wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.8 8.6c0 5.6-8.8 10.4-8.8 10.4S3.2 14.2 3.2 8.6A4.6 4.6 0 0 1 12 6.1a4.6 4.6 0 0 1 8.8 2.5Z"/></svg></a>
-<a href="{{ routes.account_url }}" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c.8-3.4 3-5.1 6.5-5.1s5.7 1.7 6.5 5.1"/></svg></a>
-<a class="mc-header__bag" href="{{ routes.cart_url }}" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>{% if cart.item_count > 0 %}<span class="mc-header__bag-count">{{ cart.item_count }}</span>{% endif %}</a>
-</div></div>
-<div class="mc-header__mobile-row"><form class="mc-header__mobile-search" action="{{ routes.search_url }}" method="get" role="search"><input type="search" name="q" placeholder="Search products" aria-label="Search products"><input type="hidden" name="type" value="product"><button type="submit" aria-label="Search"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 5 5"/></svg></button></form></div>
+  <div class="mc-container mc-header__bar">
+    <form class="mc-search" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products" aria-label="Search products" autocomplete="off">
+      <input type="hidden" name="type" value="product">
+      <button type="submit" aria-label="Search">{% render 'mc-icon', name: 'search', size: 18 %}</button>
+    </form>
+
+    <a class="mc-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} home">
+      {%- if mc_logo != blank -%}
+        <img src="{{ mc_logo | image_url: width: 600 }}" alt="{{ mc_logo.alt | default: shop.name | escape }}" width="{{ mc_logo.width }}" height="{{ mc_logo.height }}" loading="eager">
+      {%- else -%}
+        <span class="mc-logo__text">Mana<em>Choice</em></span>
+      {%- endif -%}
+    </a>
+
+    <div class="mc-tools">
+      <a class="mc-tool" href="{{ routes.account_url }}" aria-label="Account">{% render 'mc-icon', name: 'user', size: 22 %}</a>
+      <a class="mc-tool" href="/pages/wishlist" aria-label="Wishlist">{% render 'mc-icon', name: 'heart', size: 22 %}<span class="mc-count mc-wishlist-count"></span></a>
+      <a class="mc-tool" href="{{ routes.cart_url }}" id="cart-icon-bubble" aria-label="Cart">{% render 'mc-icon', name: 'bag', size: 22 %}{% if cart.item_count > 0 %}<span class="mc-count">{{ cart.item_count }}</span>{% endif %}</a>
+    </div>
+  </div>
+
+  <div class="mc-container mc-header__mobile-search">
+    <form class="mc-search" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="search" name="q" placeholder="Search products" aria-label="Search products" autocomplete="off">
+      <input type="hidden" name="type" value="product">
+      <button type="submit" aria-label="Search">{% render 'mc-icon', name: 'search', size: 18 %}</button>
+    </form>
+  </div>
+
+  <nav class="mc-nav" aria-label="Main navigation">
+    <div class="mc-container mc-nav__list">
+      {%- if section.settings.menu != blank and section.settings.menu.links.size > 0 -%}
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}">Shop all</a>
+        {%- assign mc_n = 0 -%}
+        {%- for c in collections limit: 24 -%}
+          {%- if c.handle != 'frontpage' and c.handle != 'all' and c.handle != 'all-products' and c.handle != 'deals' and c.products_count > 0 and mc_n < 5 -%}
+            {%- assign mc_n = mc_n | plus: 1 -%}
+            <a href="{{ c.url }}"{% if collection.handle == c.handle %} aria-current="page"{% endif %}>{{ c.title }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if collections.deals.products_count > 0 -%}
+          <a class="is-sale" href="{{ collections.deals.url }}">Sale</a>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </nav>
 </header>
-{% schema %}{"name":"ManaChoice header","settings":[{"type":"image_picker","id":"logo","label":"Logo","info":"Upload the ManaChoice logo you want to use in the header."}],"presets":[{"name":"ManaChoice header"}]}{% endschema %}
+
+{% schema %}
+{
+  "name": "ManaChoice header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Transparent PNG or SVG works best." },
+    { "type": "text", "id": "announcement", "label": "Announcement bar text", "default": "Free shipping on eligible orders  ·  Easy returns" },
+    { "type": "link_list", "id": "menu", "label": "Navigation menu", "info": "Optional. Leave empty to build the menu automatically from your collections." }
+  ],
+  "presets": [{ "name": "ManaChoice header" }]
+}
+{% endschema %}
